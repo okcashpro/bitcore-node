@@ -2,13 +2,15 @@
 
 var should = require('chai').should();
 var sinon = require('sinon');
+var bitcore = require('bitcore-lib');
+var Networks = bitcore.Networks;
 var proxyquire = require('proxyquire');
 var util = require('util');
 var BaseService = require('../lib/service');
 var index = require('../lib');
 var log = index.log;
 
-describe('Node', function() {
+describe('Bitcore Node', function() {
 
   var baseConfig = {};
 
@@ -20,6 +22,10 @@ describe('Node', function() {
     Node.prototype._initialize = sinon.spy();
   });
 
+  after(function() {
+    Networks.disableRegtest();
+  });
+
   describe('@constructor', function() {
     var TestService;
     before(function() {
@@ -28,13 +34,12 @@ describe('Node', function() {
     });
     it('will set properties', function() {
       var config = {
-        network: 'testnet',
         services: [
           {
             name: 'test1',
             module: TestService
           }
-        ]
+        ],
       };
       var TestNode = proxyquire('../lib/node', {});
       TestNode.prototype.start = sinon.spy();
@@ -42,12 +47,12 @@ describe('Node', function() {
       node._unloadedServices.length.should.equal(1);
       node._unloadedServices[0].name.should.equal('test1');
       node._unloadedServices[0].module.should.equal(TestService);
-      node.network.should.equal('testnet');
+      node.network.should.equal(Networks.defaultNetwork);
       var node2 = TestNode(config);
       node2._unloadedServices.length.should.equal(1);
       node2._unloadedServices[0].name.should.equal('test1');
       node2._unloadedServices[0].module.should.equal(TestService);
-      node2.network.should.equal('testnet');
+      node2.network.should.equal(Networks.defaultNetwork);
     });
     it('will set network to testnet', function() {
       var config = {
@@ -62,7 +67,7 @@ describe('Node', function() {
       var TestNode = proxyquire('../lib/node', {});
       TestNode.prototype.start = sinon.spy();
       var node = new TestNode(config);
-      node.network.should.equal('testnet');
+      node.network.should.equal(Networks.testnet);
     });
     it('will set network to regtest', function() {
       var config = {
@@ -77,7 +82,9 @@ describe('Node', function() {
       var TestNode = proxyquire('../lib/node', {});
       TestNode.prototype.start = sinon.spy();
       var node = new TestNode(config);
-      node.network.should.equal('regtest');
+      var regtest = Networks.get('regtest');
+      should.exist(regtest);
+      node.network.should.equal(regtest);
     });
     it('will be able to disable log formatting', function() {
       var config = {
@@ -90,12 +97,11 @@ describe('Node', function() {
         ],
         formatLogs: false
       };
-
       var TestNode = proxyquire('../lib/node', {});
       var node = new TestNode(config);
       node.log.formatting.should.equal(false);
 
-      TestNode = proxyquire('../lib/node', {});
+      var TestNode = proxyquire('../lib/node', {});
       config.formatLogs = true;
       var node2 = new TestNode(config);
       node2.log.formatting.should.equal(true);
@@ -183,7 +189,7 @@ describe('Node', function() {
     });
   });
 
-  describe('#_getServiceOrder', function() {
+  describe('#getServiceOrder', function() {
     it('should return the services in the correct order', function() {
       var node = new Node(baseConfig);
       node._unloadedServices = [
@@ -212,7 +218,7 @@ describe('Node', function() {
           }
         }
       ];
-      var order = node._getServiceOrder(node._unloadedServices);
+      var order = node.getServiceOrder();
       order[0].name.should.equal('daemon');
       order[1].name.should.equal('p2p');
       order[2].name.should.equal('db');
@@ -330,7 +336,7 @@ describe('Node', function() {
         ];
       };
 
-      node._getServiceOrder = sinon.stub().returns([
+      node.getServiceOrder = sinon.stub().returns([
         {
           name: 'test1',
           module: TestService,
@@ -373,7 +379,7 @@ describe('Node', function() {
         ];
       };
 
-      node._getServiceOrder = sinon.stub().returns([
+      node.getServiceOrder = sinon.stub().returns([
         {
           name: 'test',
           module: TestService,
@@ -393,7 +399,6 @@ describe('Node', function() {
       });
 
     });
-
     it('will handle service with getAPIMethods undefined', function(done) {
       var node = new Node(baseConfig);
 
@@ -402,7 +407,7 @@ describe('Node', function() {
       TestService.prototype.start = sinon.stub().callsArg(0);
       TestService.prototype.getData = function() {};
 
-      node._getServiceOrder = sinon.stub().returns([
+      node.getServiceOrder = sinon.stub().returns([
         {
           name: 'test',
           module: TestService,
@@ -415,6 +420,30 @@ describe('Node', function() {
         done();
       });
 
+    });
+  });
+
+  describe('#getNetworkName', function() {
+    afterEach(function() {
+      bitcore.Networks.disableRegtest();
+    });
+    it('it will return the network name for livenet', function() {
+      var node = new Node(baseConfig);
+      node.getNetworkName().should.equal('livenet');
+    });
+    it('it will return the network name for testnet', function() {
+      var baseConfig = {
+        network: 'testnet'
+      };
+      var node = new Node(baseConfig);
+      node.getNetworkName().should.equal('testnet');
+    });
+    it('it will return the network for regtest', function() {
+      var baseConfig = {
+        network: 'regtest'
+      };
+      var node = new Node(baseConfig);
+      node.getNetworkName().should.equal('regtest');
     });
   });
 
@@ -442,7 +471,7 @@ describe('Node', function() {
       };
       node.test2 = {};
       node.test2.stop = sinon.stub().callsArg(0);
-      node._getServiceOrder = sinon.stub().returns([
+      node.getServiceOrder = sinon.stub().returns([
         {
           name: 'test1',
           module: TestService
