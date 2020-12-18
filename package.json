@@ -28,7 +28,7 @@
   ],
   "bin": {
     "bitcore-node": "./bin/bitcore-node",
-    "bitcoind": "./bin/shadowcoind"
+    "bitcoind": "./bin/okcashd"
   },
   "scripts": {
     "test": "mocha -R spec --recursive",
