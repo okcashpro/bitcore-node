@@ -43,7 +43,7 @@
   ],
   "dependencies": {
     "async": "^1.3.0",
-    "bitcoind-rpc": "okcashpro/litecoind-lib",
+    "bitcoind-rpc": "okcashpro/bitcoind-lib",
     "bitcore-lib": "okcashpro/bitcore-lib",
     "body-parser": "^1.13.3",
     "colors": "^1.1.2",
