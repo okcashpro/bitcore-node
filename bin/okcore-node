@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var okcore = require('../lib/cli/bitcore');
+okcore();

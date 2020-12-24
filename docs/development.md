@@ -10,22 +10,22 @@ nvm install v4
 
 ## Fork and Download Repositories
 
-To develop bitcore-node:
+To develop okcore-node:
 
 ```bash
 cd ~
-git clone git@github.com:<yourusername>/bitcore-node.git
-git clone git@github.com:<yourusername>/bitcore-lib.git
+git clone git@github.com:<yourusername>/okcore-node.git
+git clone git@github.com:<yourusername>/okcore-lib.git
 ```
 
-To develop bitcoin or to compile from source:
+To develop okcash or to compile from source:
 
 ```bash
-git clone git@github.com:<yourusername>/bitcoin.git
+git clone git@github.com:<yourusername>/okcash.git
 git fetch origin <branchname>:<branchname>
 git checkout <branchname>
 ```
-**Note**: See bitcoin documentation for building bitcoin on your platform.
+**Note**: See okcash documentation for building okcash on your platform.
 
 
 ## Install Development Dependencies
@@ -46,27 +46,27 @@ brew install zeromq
 ## Install and Symlink
 
 ```bash
-cd bitcore-lib
+cd okcore-lib
 npm install
-cd ../bitcore-node
+cd ../okcore-node
 npm install
 ```
-**Note**: If you get a message about not being able to download bitcoin distribution, you'll need to compile bitcoind from source, and setup your configuration to use that version.
+**Note**: If you get a message about not being able to download okcash distribution, you'll need to compile okcashd from source, and setup your configuration to use that version.
 
 
-We now will setup symlinks in `bitcore-node` *(repeat this for any other modules you're planning on developing)*:
+We now will setup symlinks in `okcore-node` *(repeat this for any other modules you're planning on developing)*:
 ```bash
 cd node_modules
-rm -rf bitcore-lib
-ln -s ~/bitcore-lib
+rm -rf okcore-lib
+ln -s ~/okcore-lib
 rm -rf bitcoind-rpc
 ln -s ~/bitcoind-rpc
 ```
 
-And if you're compiling or developing bitcoin:
+And if you're compiling or developing okcash:
 ```bash
 cd ../bin
-ln -sf ~/bitcoin/src/bitcoind
+ln -sf ~/okcash/src/okcashd
 ```
 
 ## Run Tests
@@ -78,7 +78,7 @@ npm install mocha -g
 
 To run all test suites:
 ```bash
-cd bitcore-node
+cd okcore-node
 npm run regtest
 npm run test
 ```
@@ -102,27 +102,27 @@ cd ~
 mkdir devnode
 cd devnode
 mkdir node_modules
-touch bitcore-node.json
+touch okcore-node.json
 touch package.json
 ```
 
-Edit `bitcore-node.json` with something similar to:
+Edit `okcore-node.json` with something similar to:
 ```json
 {
   "network": "livenet",
   "port": 3001,
   "services": [
-    "bitcoind",
+    "okcashd",
     "web",
     "insight-api",
     "insight-ui",
     "<additional_service>"
   ],
   "servicesConfig": {
-    "bitcoind": {
+    "okcashd": {
       "spawn": {
-        "datadir": "/home/<youruser>/.bitcoin",
-        "exec": "/home/<youruser>/bitcoin/src/bitcoind"
+        "datadir": "/home/<youruser>/.okcash",
+        "exec": "/home/<youruser>/okcash/src/okcashd"
       }
     }
   }
@@ -135,13 +135,13 @@ Setup symlinks for all of the services and dependencies:
 
 ```bash
 cd node_modules
-ln -s ~/bitcore-lib
-ln -s ~/bitcore-node
+ln -s ~/okcore-lib
+ln -s ~/okcore-node
 ln -s ~/insight-api
 ln -s ~/insight-ui
 ```
 
-Make sure that the `<datadir>/bitcoin.conf` has the necessary settings, for example:
+Make sure that the `<datadir>/okcash.conf` has the necessary settings, for example:
 ```
 server=1
 whitelist=127.0.0.1
@@ -149,14 +149,14 @@ txindex=1
 addressindex=1
 timestampindex=1
 spentindex=1
-zmqpubrawtx=tcp://127.0.0.1:28332
-zmqpubhashblock=tcp://127.0.0.1:28332
+zmqpubrawtx=tcp://127.0.0.1:27332
+zmqpubhashblock=tcp://127.0.0.1:27332
 rpcallowip=127.0.0.1
-rpcuser=bitcoin
+rpcuser=okcash
 rpcpassword=local321
 ```
 
 From within the `devnode` directory with the configuration file, start the node:
 ```bash
-../bitcore-node/bin/bitcore-node start
+../okcore-node/bin/okcore-node start
 ```

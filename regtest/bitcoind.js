@@ -7,7 +7,7 @@ var index = require('..');
 var log = index.log;
 
 var chai = require('chai');
-var bitcore = require('bitcore-lib');
+var bitcore = require('okcore-lib');
 var BN = bitcore.crypto.BN;
 var async = require('async');
 var rimraf = require('rimraf');
@@ -17,7 +17,7 @@ var bitcoind;
 var should = chai.should();
 var assert = chai.assert;
 var sinon = require('sinon');
-var BitcoinRPC = require('bitcoind-rpc');
+var BitcoinRPC = require('okcashd-rpc');
 var transactionData = [];
 var blockHashes = [];
 var utxos;
@@ -46,7 +46,7 @@ describe('Bitcoind Functionality', function() {
       bitcoind = require('../').services.Bitcoin({
         spawn: {
           datadir: datadir,
-          exec: path.resolve(__dirname, '../bin/bitcoind')
+          exec: path.resolve(__dirname, '../bin/okcashd')
         },
         node: {
           network: regtestNetwork,
@@ -442,6 +442,7 @@ describe('Bitcoind Functionality', function() {
         tx.outputSatoshis.should.equal(50 * 1e8);
         tx.inputSatoshis.should.equal(0);
         tx.inputs.length.should.equal(1);
+        // tx.outputs.length.should.equal(2); // segwit
         tx.outputs.length.should.equal(1);
         should.equal(tx.inputs[0].prevTxId, null);
         should.equal(tx.inputs[0].outputIndex, null);

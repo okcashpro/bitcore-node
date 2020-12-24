@@ -9,13 +9,13 @@ var log = index.log;
 log.debug = function() {};
 
 var chai = require('chai');
-var bitcore = require('bitcore-lib');
+var bitcore = require('okcore-lib');
 var rimraf = require('rimraf');
 var node;
 
 var should = chai.should();
 
-var BitcoinRPC = require('bitcoind-rpc');
+var BitcoinRPC = require('okcashd-rpc');
 var index = require('..');
 var Transaction = bitcore.Transaction;
 var BitcoreNode = index.Node;
@@ -53,7 +53,7 @@ describe('Node Functionality', function() {
             config: {
               spawn: {
                 datadir: datadir,
-                exec: path.resolve(__dirname, '../bin/bitcoind')
+                exec: path.resolve(__dirname, '../bin/okcashd')
               }
             }
           }
@@ -205,6 +205,7 @@ describe('Node Functionality', function() {
         info.satoshis.should.equal(10 * 1e8);
         info.confirmations.should.equal(3);
         info.tx.blockTimestamp.should.be.a('number');
+        // info.tx.feeSatoshis.should.be.within(9500, 40000); // TODO: Not sure how the fee is calculated in litecoind, start at rpcwallet.cpp sendtoaddress()
         info.tx.feeSatoshis.should.be.within(950, 4000);
         done();
       });
@@ -663,6 +664,8 @@ describe('Node Functionality', function() {
         var memAddress = bitcore.PrivateKey().toAddress(node.network).toString();
         var tx = new Transaction();
         tx.from(unspentOutput);
+        // tx.to(memAddress, unspentOutput.satoshis - 40000); // TODO: only 90000 satoshis available, better fee?
+        // tx.fee(40000);
         tx.to(memAddress, unspentOutput.satoshis - 1000);
         tx.fee(1000);
         tx.sign(testKey);
