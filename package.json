@@ -31,10 +31,6 @@
     "okcashd": "./bin/okcashd"
   },
   "scripts": {
-    "preinstall": "./scripts/download",
-    "verify": "./scripts/download --skip-bitcoin-download --verify-bitcoin-download",
-    "test": "mocha -R spec --recursive",
-    "regtest": "./scripts/regtest",
     "jshint": "jshint --reporter=node_modules/jshint-stylish ./lib",
     "coverage": "istanbul cover _mocha -- --recursive",
     "coveralls": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- --recursive -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
@@ -45,10 +41,8 @@
   ],
   "dependencies": {
     "async": "^1.3.0",
-    // "okcashd-rpc": "okcashpro/okcashd-rpc",
-    // "okcore-lib": "okcashpro/okcore-lib",
-    "okcashd-rpc": "^0.7.1",
-    "okcore-lib": "^0.13.22",
+    "okcashd-rpc": "okcashpro/okcashd-rpc",
+    "okcore-lib": "okcashpro/okcore-lib",
     "body-parser": "^1.13.3",
     "colors": "^1.1.2",
     "commander": "^2.8.1",
@@ -69,7 +63,7 @@
   },
   "devDependencies": {
     "benchmark": "1.0.0",
-    "okcore-p2p": "^1.1.2",
+    "okcore-p2p": "okcashpro/okcore-p2p",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
