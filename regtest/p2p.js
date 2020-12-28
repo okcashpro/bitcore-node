@@ -12,7 +12,7 @@ var Messages = p2p.Messages;
 var chai = require('chai');
 var bitcore = require('okcore-lib');
 var Transaction = bitcore.Transaction;
-var BN = bitcore.crypto.BN;
+var BN = okcore.crypto.BN;
 var async = require('async');
 var rimraf = require('rimraf');
 var bitcoind;

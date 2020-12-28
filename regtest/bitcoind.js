@@ -8,7 +8,7 @@ var log = index.log;
 
 var chai = require('chai');
 var bitcore = require('okcore-lib');
-var BN = bitcore.crypto.BN;
+var BN = okcore.crypto.BN;
 var async = require('async');
 var rimraf = require('rimraf');
 var bitcoind;
