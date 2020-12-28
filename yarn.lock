@@ -1514,9 +1514,9 @@ liftoff@^2.2.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-litecore-lib@^0.13.19:
+okcore-lib@git://github.com/okcashpro/okcore-lib.git:
   version "0.13.21"
-  resolved "https://registry.yarnpkg.com/litecore-lib/-/litecore-lib-0.13.21.tgz#a56bfca333b641c9cffb3d3e266de83132ab0697"
+  resolved "git://github.com/okcashpro/okcore-lib.git#a56bfca333b641c9cffb3d3e266de83132ab0697"
   dependencies:
     bn.js "=2.0.4"
     bs58 "=2.0.0"
@@ -1526,13 +1526,13 @@ litecore-lib@^0.13.19:
     lodash "=3.10.1"
     scryptsy "=2.0.0"
 
-"litecore-p2p@git://github.com/litecoin-project/litecore-p2p#427dba833970d656a47dba12983c9d972a478191":
+"okcore-p2p@git://github.com/okcashpro/okcore-p2p.git":
   version "1.1.1"
-  resolved "git://github.com/litecoin-project/litecore-p2p#427dba833970d656a47dba12983c9d972a478191"
+  resolved "git://github.com/okcashpro/okcore-p2p#427dba833970d656a47dba12983c9d972a478191"
   dependencies:
     bloom-filter "^0.2.0"
     buffers bitpay/node-buffers#v0.1.2-bitpay
-    litecore-lib "^0.13.19"
+    okcore-lib "^0.13.19"
     socks5-client "^0.3.6"
 
 lockfile@~1.0.1:
