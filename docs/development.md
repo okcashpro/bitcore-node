@@ -114,8 +114,8 @@ Edit `okcore-node.json` with something similar to:
   "services": [
     "okcashd",
     "web",
-    "insight-api",
-    "insight-ui",
+    "insight-ok-api",
+    "insight-ok-ui",
     "<additional_service>"
   ],
   "servicesConfig": {
@@ -129,7 +129,7 @@ Edit `okcore-node.json` with something similar to:
 }
 ```
 
-**Note**: To install services [insight-api](https://github.com/bitpay/insight-api) and [insight-ui](https://github.com/bitpay/insight-ui) you'll need to clone the repositories locally.
+**Note**: To install services [insight-ok-api](https://github.com/okcashpro/insight-ok-api) and [insight-ok-ui](https://github.com/okcashpro/insight-ok-ui) you'll need to clone the repositories locally.
 
 Setup symlinks for all of the services and dependencies:
 
@@ -137,8 +137,8 @@ Setup symlinks for all of the services and dependencies:
 cd node_modules
 ln -s ~/okcore-lib
 ln -s ~/okcore-node
-ln -s ~/insight-api
-ln -s ~/insight-ui
+ln -s ~/insight-ok-api
+ln -s ~/insight-ok-ui
 ```
 
 Make sure that the `<datadir>/okcash.conf` has the necessary settings, for example:

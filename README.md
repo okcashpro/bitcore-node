@@ -37,8 +37,8 @@ This will create a directory with configuration files for your node and install 
 
 There are several add-on services available to extend the functionality of Bitcore:
 
-- [Insight API](https://github.com/bitpay/insight-api)
-- [Insight UI](https://github.com/bitpay/insight-ui)
+- [Insight OK API](https://github.com/okcashpro/insight-ok-api)
+- [Insight OK UI](https://github.com/okcashpro/insight-ok-ui)
 - [Bitcore Wallet Service](https://github.com/bitpay/bitcore-wallet-service)
 
 ## Documentation

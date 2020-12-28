@@ -22,7 +22,7 @@ Services correspond with a Node.js module as described in 'package.json', for ex
   "dependencies": {
     "okcore-lib": "^0.1.0",
     "okcore-node": "^0.2.0",
-    "insight-api": "^3.0.0"
+    "insight-ok-api": "^3.0.0"
   }
 }
 ```
