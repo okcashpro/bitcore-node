@@ -18,7 +18,7 @@ describe('#start', function() {
     });
     it('will give true with "datadir" at root', function() {
       var checkConfigVersion2 = proxyquire('../../lib/scaffold/start', {}).checkConfigVersion2;
-      var v2 = checkConfigVersion2({datadir: '/home/user/.okcash/data', services: []});
+      var v2 = checkConfigVersion2({datadir: '/home/user/.okcore/data', services: []});
       v2.should.equal(true);
     });
     it('will give true with "address" service enabled', function() {
